@@ -8,12 +8,11 @@ import telegram
 def main():
     load_dotenv()
     telegram_token = os.getenv('TELEGRAM_TOKEN')
-    chat_id = '@BeautifulSpacePhotos'
-    text_to_bot = "Классный канал!!!"
+    chat_id = os.getenv('TELEGRAM_CHAT_ID')
     bot = telegram.Bot(telegram_token)
-    bot.send_message(
+    bot.send_photo(
         chat_id=chat_id,
-        text=text_to_bot
+        photo=open('apod_nasa/apod_0.jpg', 'rb')
     )
 
 
