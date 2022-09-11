@@ -3,13 +3,13 @@ import os
 
 from dotenv import load_dotenv
 
-from functions_upload_image import check_image_extension, saved_images
+from functions_upload_images import check_image_extension, saved_image
 
 import requests
 
 
 def fetch_apod_nasa(nasa_token, amount_images_apod=None):
-    path_spacex_image = 'apod_nasa'
+    path_spacex_image = 'images/apod_nasa'
     url_apod_nasa = 'https://api.nasa.gov/planetary/apod'
     if amount_images_apod is None:
         amount_images_apod = 1
@@ -25,7 +25,7 @@ def fetch_apod_nasa(nasa_token, amount_images_apod=None):
         extension_image = check_image_extension(url_image)
         if extension_image:
             name_apode_image = f'apod_{link_mumber}{extension_image}'
-            saved_images(url_image, path_spacex_image, name_apode_image)
+            saved_image(url_image, path_spacex_image, name_apode_image)
         else:
             pass
 

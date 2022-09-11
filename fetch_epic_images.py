@@ -3,13 +3,13 @@ import os
 
 from dotenv import load_dotenv
 
-from functions_upload_image import saved_images
+from functions_upload_images import saved_image
 
 import requests
 
 
 def fetch_epic_images(nasa_token):
-    path_epic_image = 'epic'
+    path_epic_image = 'images/epic'
     ext_epic_image = '.png'
     url_epic = 'https://api.nasa.gov/EPIC/api/natural'
     payload = {
@@ -28,7 +28,7 @@ def fetch_epic_images(nasa_token):
             f'{year_creat}/{month_creat}/{day_creat}'
             f'/png/{image_name}{ext_epic_image}'
         )
-        saved_images(
+        saved_image(
             url_epic_enriched,
             path_epic_image,
             name_epic_image,

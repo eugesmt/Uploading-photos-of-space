@@ -5,7 +5,7 @@ from urllib.parse import unquote, urlsplit
 import requests
 
 
-def saved_images(url, image_path, image_name, api_key=None):
+def saved_image(url, image_path, image_name, api_key=None):
     payload = {
         'api_key': api_key
     }

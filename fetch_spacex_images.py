@@ -1,12 +1,12 @@
 import argparse
 
-from functions_upload_image import check_image_extension, saved_images
+from functions_upload_images import check_image_extension, saved_image
 
 import requests
 
 
-def fetch_spacex_last_launch(launch_id=None):
-    image_path_spacex = 'spacex'
+def fetch_spacex_images(launch_id=None):
+    image_path_spacex = 'images/spacex'
     if launch_id is None:
         url_spacexdata = 'https://api.spacexdata.com/v5/launches/latest'
         response = requests.get(url_spacexdata)
@@ -19,7 +19,7 @@ def fetch_spacex_last_launch(launch_id=None):
     for link_mumber, link in enumerate(launch_image_links):
         image_extension = check_image_extension(link)
         image_name_spacex = f'spacex_{link_mumber}{image_extension}'
-        saved_images(link, image_path_spacex, image_name_spacex)
+        saved_image(link, image_path_spacex, image_name_spacex)
 
 
 def main():
@@ -28,7 +28,7 @@ def main():
     )
     parser.add_argument('-id', '--launch_id', help='ID запуска')
     args = parser.parse_args()
-    fetch_spacex_last_launch(args.launch_id)
+    fetch_spacex_images(args.launch_id)
 
 
 if __name__ == '__main__':
