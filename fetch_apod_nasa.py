@@ -32,7 +32,7 @@ def fetch_apod_nasa(nasa_token, amount_images_apod=None):
 
 def main():
     load_dotenv()
-    nasa_token = os.getenv('NASA_TOKEN')
+    nasa_token = os.environ['NASA_TOKEN']
     parser = argparse.ArgumentParser(
         description='Скачивание красивых снимков от NASA'
     )

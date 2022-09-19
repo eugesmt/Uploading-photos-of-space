@@ -41,7 +41,7 @@ def main():
         description='Скачивание последних фото планеты от NASA')
     parser.parse_args()
     load_dotenv()
-    nasa_token = os.getenv('NASA_TOKEN')
+    nasa_token = os.environ['NASA_TOKEN']
     fetch_epic_images(nasa_token)
 
 

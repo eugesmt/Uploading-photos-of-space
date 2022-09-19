@@ -5,16 +5,11 @@ from functions_upload_images import check_image_extension, saved_image
 import requests
 
 
-def fetch_spacex_images(launch_id=None):
+def fetch_spacex_images(launch_id):
     image_path_spacex = 'images/spacex'
-    if launch_id is None:
-        url_spacexdata = 'https://api.spacexdata.com/v5/launches/latest'
-        response = requests.get(url_spacexdata)
-        response.raise_for_status
-    else:
-        url_spacexdata = f'https://api.spacexdata.com/v5/launches/{launch_id}'
-        response = requests.get(url_spacexdata)
-        response.raise_for_status
+    url_spacexdata = f'https://api.spacexdata.com/v5/launches/{launch_id}'
+    response = requests.get(url_spacexdata)
+    response.raise_for_status()
     launch_image_links = response.json()['links']['flickr']['original']
     for link_mumber, link in enumerate(launch_image_links):
         image_extension = check_image_extension(link)
@@ -24,9 +19,14 @@ def fetch_spacex_images(launch_id=None):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Згрузит фото от SpaceX по указанному ID запуска.'
+        description='Загрузит фото от SpaceX по указанному ID запуска.'
     )
-    parser.add_argument('-id', '--launch_id', help='ID запуска')
+    parser.add_argument(
+        '-id',
+        '--launch_id',
+        default='latest',
+        help='ID запуска'
+    )
     args = parser.parse_args()
     fetch_spacex_images(args.launch_id)
 
