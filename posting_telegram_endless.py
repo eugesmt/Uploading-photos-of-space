@@ -2,10 +2,14 @@ import argparse
 import os
 import random
 import time
+from pathlib import Path
+
 
 from dotenv import load_dotenv
 
 from functions_posting_telegram import send_photo_to_channel
+
+import telegram
 
 
 def main():
@@ -21,7 +25,6 @@ def main():
         help='Количество секунд'
     )
     args = parser.parse_args()
-    print(args.amount_seconds)
     load_dotenv()
     telegram_token = os.environ['TELEGRAM_TOKEN']
     chat_id = os.environ['TELEGRAM_CHAT_ID']
@@ -33,19 +36,24 @@ def main():
             path_image, direct, files = element
             del direct
             if len(files) > 0:
+                random.shuffle(files)
                 for name_image in files:
-                    if os.path.getsize(
-                            f'{path_image}{name_image}') < image_size:
-                        send_photo_to_channel(
-                            path_image,
-                            name_image,
-                            chat_id,
-                            telegram_token
-                        )
-                        time.sleep(args.amount_seconds)
-                    else:
-                        pass
-        random.shuffle(image_paths_names)
+                    file_path = Path() / f'{path_image}' / f'{name_image}'
+                    if os.path.getsize(file_path) < image_size:
+                        while True:
+                            try:
+                                send_photo_to_channel(
+                                    path_image,
+                                    name_image,
+                                    chat_id,
+                                    telegram_token
+                                )
+                            except telegram.error.NetworkError:
+                                time.sleep(2)
+
+                                continue
+                            break
+                    time.sleep(float(args.amount_seconds))
 
 
 if __name__ == '__main__':
