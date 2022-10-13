@@ -5,22 +5,13 @@ from urllib.parse import unquote, urlsplit
 import requests
 
 
-def saved_image(url, image_path, image_name, api_key=None):
-    payload = {
-        'api_key': api_key
-    }
-    response = requests.get(url, params=payload)
+def saved_image(url, image_path, image_name, params=None):
+    response = requests.get(url, params=params)
     response.raise_for_status()
-    try:
-        Path(image_path).mkdir(parents=True, exist_ok=False)
-        with open(f'{image_path}/{image_name}', 'wb') as file:
-            file.write(response.content)
-    except FileExistsError:
-        if Path(f'{image_path}/{image_name}').is_file():
-            pass
-        else:
-            with open(f'{image_path}/{image_name}', 'wb') as file:
-                file.write(response.content)
+    Path(image_path).mkdir(parents=True, exist_ok=True)
+    file_path = Path() / f'{image_path}' / f'{image_name}'
+    with open(file_path, 'wb') as file:
+        file.write(response.content)
 
 
 def check_image_extension(link):
