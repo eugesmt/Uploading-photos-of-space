@@ -1,6 +1,7 @@
 import argparse
 import os
 import random
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -17,6 +18,7 @@ def random_file(image_paths_names):
 
 
 def main():
+    image_size = 20971520
     load_dotenv()
     telegram_token = os.environ['TELEGRAM_TOKEN']
     chat_id = os.environ['TELEGRAM_CHAT_ID']
@@ -26,7 +28,7 @@ def main():
     parser.add_argument('-img_path', '--image_path', help='Путь до фото')
     args = parser.parse_args()
     if args.image_path is not None:
-        if os.path.getsize(args.image_path) < 20971520:
+        if os.path.getsize(args.image_path) < image_size:
             image_path_head, image_path_tail = os.path.split(args.image_path)
             send_photo_to_channel(
                 image_path_head,
@@ -44,7 +46,8 @@ def main():
         if len(random_files) > 0:
             files_to_send = []
             for img_name in random_files:
-                if os.path.getsize(f'{random_file_path}{img_name}') < 20971520:
+                file_path = Path() / f'{random_file_path}' / f'{img_name}'
+                if os.path.getsize(file_path) < image_size:
                     files_to_send.append(img_name)
                 else:
                     pass
