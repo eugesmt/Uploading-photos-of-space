@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 
 from functions_upload_images import check_image_extension, saved_image
 
@@ -6,7 +7,7 @@ import requests
 
 
 def fetch_spacex_images(launch_id):
-    image_path_spacex = 'images/spacex'
+    image_path_spacex = Path() / 'images' / 'spacex'
     url_spacexdata = f'https://api.spacexdata.com/v5/launches/{launch_id}'
     response = requests.get(url_spacexdata)
     response.raise_for_status()
