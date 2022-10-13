@@ -1,5 +1,6 @@
 import argparse
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -9,7 +10,7 @@ import requests
 
 
 def fetch_epic_images(nasa_token):
-    path_epic_image = 'images/epic'
+    path_epic_image = Path() / 'images' / 'epic'
     ext_epic_image = '.png'
     url_epic = 'https://api.nasa.gov/EPIC/api/natural'
     payload = {
@@ -32,7 +33,7 @@ def fetch_epic_images(nasa_token):
             url_epic_enriched,
             path_epic_image,
             name_epic_image,
-            nasa_token
+            params=payload
         )
 
 
