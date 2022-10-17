@@ -16,8 +16,8 @@ def saved_image(url, image_path, image_name, params=None):
 
 def check_image_extension(link):
     image_link_path = urlsplit(link).path
-    link_replacement_escape = unquote(image_link_path)
-    image_path_head, image_path_tail = os.path.split(link_replacement_escape)
+    replacement_escape_link = unquote(image_link_path)
+    image_path_head, image_path_tail = os.path.split(replacement_escape_link)
     del image_path_head
     image_root, image_ext = os.path.splitext(image_path_tail)
     del image_root

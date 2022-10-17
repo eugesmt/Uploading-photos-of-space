@@ -7,15 +7,15 @@ import requests
 
 
 def fetch_spacex_images(launch_id):
-    image_path_spacex = Path() / 'images' / 'spacex'
-    url_spacexdata = f'https://api.spacexdata.com/v5/launches/{launch_id}'
-    response = requests.get(url_spacexdata)
+    spacex_image_path = Path() / 'images' / 'spacex'
+    spacexdata_url = f'https://api.spacexdata.com/v5/launches/{launch_id}'
+    response = requests.get(spacexdata_url)
     response.raise_for_status()
     launch_image_links = response.json()['links']['flickr']['original']
-    for link_mumber, link in enumerate(launch_image_links):
+    for link_number, link in enumerate(launch_image_links):
         image_extension = check_image_extension(link)
-        image_name_spacex = f'spacex_{link_mumber}{image_extension}'
-        saved_image(link, image_path_spacex, image_name_spacex)
+        spacex_image_name = f'spacex_{link_number}{image_extension}'
+        saved_image(link, spacex_image_path, spacex_image_name )
 
 
 def main():

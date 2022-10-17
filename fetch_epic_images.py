@@ -10,29 +10,29 @@ import requests
 
 
 def fetch_epic_images(nasa_token):
-    path_epic_image = Path() / 'images' / 'epic'
-    ext_epic_image = '.png'
-    url_epic = 'https://api.nasa.gov/EPIC/api/natural'
+    epic_image_path = Path() / 'images' / 'epic'
+    epic_image_ext = '.png'
+    epic_url = 'https://api.nasa.gov/EPIC/api/natural'
     payload = {
         'api_key': nasa_token
     }
-    response = requests.get(url=url_epic, params=payload)
+    response = requests.get(url=epic_url, params=payload)
     response.raise_for_status()
-    link_epic_images = response.json()
-    for number_epic_image, epic_image in enumerate(link_epic_images):
-        date_creat, image_name = epic_image['date'], epic_image['image']
-        year_creat, month_creat, day_creat = date_creat.split(' ')[
+    epic_images_link = response.json()
+    for epic_image_number, epic_image in enumerate(epic_images_link):
+        created_date, image_name = epic_image['date'], epic_image['image']
+        created_yaer, created_month, created_day = created_date.split(' ')[
             0].split('-')
-        name_epic_image = f'epic_{number_epic_image}{ext_epic_image}'
-        url_epic_enriched = (
+        epic_image_name = f'epic_{epic_image_number}{epic_image_ext}'
+        enriched_epic_url = (
             f'https://api.nasa.gov/EPIC/archive/natural/'
-            f'{year_creat}/{month_creat}/{day_creat}'
-            f'/png/{image_name}{ext_epic_image}'
+            f'{created_yaer}/{created_month}/{created_day}'
+            f'/png/{image_name}{epic_image_ext}'
         )
         saved_image(
-            url_epic_enriched,
-            path_epic_image,
-            name_epic_image,
+            enriched_epic_url,
+            epic_image_path,
+            epic_image_name,
             params=payload
         )
 

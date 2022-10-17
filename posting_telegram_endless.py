@@ -20,7 +20,7 @@ def main():
     )
     parser.add_argument(
         '-second',
-        '--amount_seconds',
+        '--seconds_amount',
         default=14400,
         help='Количество секунд'
     )
@@ -33,18 +33,18 @@ def main():
         image_paths_names.append(element)
     while True:
         for element in image_paths_names:
-            path_image, direct, files = element
+            image_path, direct, files = element
             del direct
             if len(files) > 0:
                 random.shuffle(files)
-                for name_image in files:
-                    file_path = Path() / f'{path_image}' / f'{name_image}'
+                for image_name in files:
+                    file_path = Path() / f'{image_path}' / f'{image_name}'
                     if os.path.getsize(file_path) < image_size:
                         while True:
                             try:
                                 send_photo_to_channel(
-                                    path_image,
-                                    name_image,
+                                    image_path,
+                                    image_name,
                                     chat_id,
                                     telegram_token
                                 )
@@ -53,7 +53,7 @@ def main():
 
                                 continue
                             break
-                    time.sleep(float(args.amount_seconds))
+                    time.sleep(float(args.seconds_amount))
 
 
 if __name__ == '__main__':
