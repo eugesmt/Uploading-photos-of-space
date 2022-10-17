@@ -35,10 +35,6 @@ def fetch_apod_nasa(nasa_token, images_apod_amount):
                     apode_image_name,
                     params=params
                 )
-            else:
-                pass
-        else:
-            pass
 
 
 def main():

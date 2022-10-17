@@ -33,8 +33,7 @@ def main():
         image_paths_names.append(element)
     while True:
         for element in image_paths_names:
-            image_path, direct, files = element
-            del direct
+            image_path, _, files = element
             if len(files) > 0:
                 random.shuffle(files)
                 for image_name in files:
@@ -50,7 +49,6 @@ def main():
                                 )
                             except telegram.error.NetworkError:
                                 time.sleep(2)
-
                                 continue
                             break
                     time.sleep(float(args.seconds_amount))

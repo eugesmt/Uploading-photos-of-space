@@ -9,10 +9,9 @@ from functions_posting_telegram import send_photo_to_channel
 
 
 def random_file(image_paths_names):
-    path, direct, files = random.choice(image_paths_names)
+    path, _, files = random.choice(image_paths_names)
     while not len(files):
-        path, direct, files = random.choice(image_paths_names)
-        del direct
+        path, files = random.choice(image_paths_names)
     else:
         return path, files
 
