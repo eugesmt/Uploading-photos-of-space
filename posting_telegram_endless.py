@@ -2,12 +2,10 @@ import argparse
 import os
 import random
 import time
-from pathlib import Path
-
 
 from dotenv import load_dotenv
 
-from functions_posting_telegram import send_photo_to_channel
+import functions_posting_telegram as posting_tg
 
 import telegram
 
@@ -28,30 +26,23 @@ def main():
     load_dotenv()
     telegram_token = os.environ['TELEGRAM_TOKEN']
     chat_id = os.environ['TELEGRAM_CHAT_ID']
-    image_paths_names = []
-    for element in os.walk('images'):
-        image_paths_names.append(element)
     while True:
-        for element in image_paths_names:
-            image_path, _, files = element
-            if len(files) > 0:
-                random.shuffle(files)
-                for image_name in files:
-                    file_path = Path() / f'{image_path}' / f'{image_name}'
-                    if os.path.getsize(file_path) < image_size:
-                        while True:
-                            try:
-                                send_photo_to_channel(
-                                    image_path,
-                                    image_name,
-                                    chat_id,
-                                    telegram_token
-                                )
-                            except telegram.error.NetworkError:
-                                time.sleep(2)
-                                continue
-                            break
-                    time.sleep(float(args.seconds_amount))
+        image_paths = posting_tg.collect_files_from_folder()
+        random.shuffle(image_paths)
+        for image_path in image_paths:
+            if os.path.getsize(image_path) < image_size:
+                while True:
+                    try:
+                        posting_tg.send_photo_to_channel(
+                            image_path,
+                            chat_id,
+                            telegram_token
+                        )
+                    except telegram.error.NetworkError:
+                        time.sleep(4)
+                        continue
+                    break
+            time.sleep(float(args.seconds_amount))
 
 
 if __name__ == '__main__':
