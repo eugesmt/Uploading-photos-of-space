@@ -10,7 +10,7 @@ from functions_posting_telegram import send_photo_to_channel
 
 def random_file(image_paths_names):
     path, direct, files = random.choice(image_paths_names)
-    while len(files) == 0:
+    while not len(files):
         path, direct, files = random.choice(image_paths_names)
         del direct
     else:
@@ -49,8 +49,7 @@ def main():
                 file_path = Path() / f'{random_file_path}' / f'{img_name}'
                 if os.path.getsize(file_path) < image_size:
                     files_to_send.append(img_name)
-                else:
-                    pass
+
             img_name = random.choice(files_to_send)
             send_photo_to_channel(
                 random_file_path,

@@ -15,7 +15,7 @@ def fetch_spacex_images(launch_id):
     for link_number, link in enumerate(launch_image_links):
         image_extension = check_image_extension(link)
         spacex_image_name = f'spacex_{link_number}{image_extension}'
-        saved_image(link, spacex_image_path, spacex_image_name )
+        saved_image(link, spacex_image_path, spacex_image_name)
 
 
 def main():
