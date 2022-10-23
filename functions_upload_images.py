@@ -14,7 +14,7 @@ def saved_image(url, image_path, image_name, params=None):
         file.write(response.content)
 
 
-def check_image_extension(link):
+def get_image_extension(link):
     image_link_path = urlsplit(link).path
     replacement_escape_link = unquote(image_link_path)
     _, image_path_tail = os.path.split(replacement_escape_link)
