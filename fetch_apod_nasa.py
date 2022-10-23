@@ -4,7 +4,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from functions_upload_images import check_image_extension, saved_image
+from functions_upload_images import get_image_extension, saved_image
 
 import requests
 
@@ -23,7 +23,7 @@ def fetch_apod_nasa(nasa_token, images_apod_amount):
         media_type = content['media_type']
         if media_type == 'image':
             image_url = content['url']
-            image_extension = check_image_extension(image_url)
+            image_extension = get_image_extension(image_url)
             if image_extension:
                 apode_image_name = f'apod_{image_number}{image_extension}'
                 params = {
@@ -43,13 +43,12 @@ def main():
     parser = argparse.ArgumentParser(
         description='Скачивание красивых снимков от NASA'
     )
-    args = parser.add_argument(
+    parser.add_argument(
         '-amount',
         '--images_apod_amount',
         default=1,
         help='Количество скачиваемых изображений'
     )
-
     args = parser.parse_args()
     fetch_apod_nasa(nasa_token, args.images_apod_amount)
 
