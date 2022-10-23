@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 
-from functions_upload_images import check_image_extension, saved_image
+from functions_upload_images import get_image_extension, saved_image
 
 import requests
 
@@ -13,7 +13,7 @@ def fetch_spacex_images(launch_id):
     response.raise_for_status()
     launch_image_links = response.json()['links']['flickr']['original']
     for link_number, link in enumerate(launch_image_links):
-        image_extension = check_image_extension(link)
+        image_extension = get_image_extension(link)
         spacex_image_name = f'spacex_{link_number}{image_extension}'
         saved_image(link, spacex_image_path, spacex_image_name)
 
