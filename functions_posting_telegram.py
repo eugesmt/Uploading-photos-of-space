@@ -13,14 +13,17 @@ def send_photo_to_channel(image_path, chat_id, telegram_token):
         )
 
 
-def collect_files_from_folder():
-    image_paths_names = []
+def get_files_paths():
     files_paths = []
-    for element in os.walk('images'):
-        image_paths_names.append(element)
-    for element in image_paths_names:
-        image_path, _, files = element
+    for root, _, files in os.walk('images'):
         for file in files:
-            file_path = Path() / f'{image_path}' / f'{file}'
+            file_path = Path() / f'{root}' / f'{file}'
             files_paths.append(file_path)
     return files_paths
+
+
+def filter_files_size(image_size, images_paths):
+    filtered_files_paths = [
+        path for path in images_paths if os.path.getsize(path) < image_size
+    ]
+    return filtered_files_paths
