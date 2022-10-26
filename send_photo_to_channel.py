@@ -22,7 +22,7 @@ def main():
     if image_path is not None:
         if os.path.getsize(image_path) < image_size:
             image_path_head, image_path_tail = os.path.split(image_path)
-            file_path = Path() / f'{image_path_head}' / f'{image_path_tail}'
+            file_path = Path() / image_path_head / image_path_tail
             posting_tg.send_photo_to_channel(
                 file_path,
                 chat_id,
