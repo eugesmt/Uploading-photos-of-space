@@ -17,7 +17,7 @@ def get_files_paths():
     files_paths = []
     for root, _, files in os.walk('images'):
         for file in files:
-            file_path = Path() / f'{root}' / f'{file}'
+            file_path = Path() / root / file
             files_paths.append(file_path)
     return files_paths
 
