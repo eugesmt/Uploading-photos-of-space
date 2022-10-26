@@ -9,7 +9,7 @@ def saved_image(url, image_path, image_name, params=None):
     response = requests.get(url, params=params)
     response.raise_for_status()
     Path(image_path).mkdir(parents=True, exist_ok=True)
-    file_path = Path() / f'{image_path}' / f'{image_name}'
+    file_path = Path() / image_path / image_name
     with open(file_path, 'wb') as file:
         file.write(response.content)
 
