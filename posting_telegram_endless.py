@@ -14,12 +14,12 @@ def posting_images_to_telegram(tg_token, chat_id, seconds, size):
     while True:
         image_paths = posting_tg.get_files_paths()
         random.shuffle(image_paths)
-        filtered_files_size = posting_tg.filter_files_size(size, image_paths)
-        for file in filtered_files_size:
+        filtered_file_paths = posting_tg.filter_files_size(size, image_paths)
+        for file_path in filtered_file_paths:
             while True:
                 try:
                     posting_tg.send_photo_to_channel(
-                        file,
+                        file_path,
                         chat_id,
                         tg_token
                     )
