@@ -22,13 +22,14 @@ def fetch_epic_images(nasa_token):
     epic_images_link = response.json()
     for epic_image_number, epic_image in enumerate(epic_images_link):
         created_date, image_name = epic_image['date'], epic_image['image']
-        parse_date = datetime.fromisoformat(created_date)
+        test_date = datetime.strptime(created_date, "%Y-%m-%d %H:%M:%S")
         epic_image_name = f'epic_{epic_image_number}{epic_image_ext}'
         enriched_epic_url = (
             f'https://api.nasa.gov/EPIC/archive/natural/'
-            f'{parse_date.year}/{parse_date.month}/{parse_date.day}'
+            f'{test_date.strftime("%Y/%m/%d")}'
             f'/png/{image_name}{epic_image_ext}'
         )
+        print(enriched_epic_url)
         saved_image(
             enriched_epic_url,
             epic_image_path,
