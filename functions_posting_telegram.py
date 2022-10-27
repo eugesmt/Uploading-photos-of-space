@@ -13,9 +13,9 @@ def send_photo_to_channel(image_path, chat_id, telegram_token):
         )
 
 
-def get_files_paths():
+def get_files_paths(images_dir):
     files_paths = []
-    for root, _, files in os.walk('images'):
+    for root, _, files in os.walk(images_dir):
         for file in files:
             file_path = Path() / root / file
             files_paths.append(file_path)
